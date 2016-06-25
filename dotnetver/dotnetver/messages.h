@@ -1,5 +1,3 @@
- // ***** Sample.mc *****
- // This is the header section.
 //
 //  Values are 32 bit values laid out as follows:
 //
@@ -45,6 +43,24 @@
 
 
 //
+// MessageId: MSG_NET11_INSTALLED
+//
+// MessageText:
+//
+// .NET v1.1 is installed
+//
+#define MSG_NET11_INSTALLED              ((DWORD)0x40021100L)
+
+//
+// MessageId: MSG_NET11SP1_INSTALLED
+//
+// MessageText:
+//
+// .NET v1.1 SP1 is installed
+//
+#define MSG_NET11SP1_INSTALLED           ((DWORD)0x40021110L)
+
+//
 // MessageId: MSG_NET45_INSTALLED
 //
 // MessageText:
@@ -70,6 +86,33 @@
 // .NET v4.5.2 is installed
 //
 #define MSG_NET452_INSTALLED             ((DWORD)0x40024520L)
+
+//
+// MessageId: MSG_NET46_INSTALLED
+//
+// MessageText:
+//
+// .NET v4.6 is installed
+//
+#define MSG_NET46_INSTALLED              ((DWORD)0x40024600L)
+
+//
+// MessageId: MSG_NET461_INSTALLED
+//
+// MessageText:
+//
+// .NET v4.6.1 is installed
+//
+#define MSG_NET461_INSTALLED             ((DWORD)0x40024610L)
+
+//
+// MessageId: MSG_NET462_PREVIEW_INSTALLED
+//
+// MessageText:
+//
+// .NET v4.6.2 Preview is installed
+//
+#define MSG_NET462_PREVIEW_INSTALLED     ((DWORD)0x40024621L)
 
 //
 // MessageId: MSG_NET_UNKNOWN_RELEASE

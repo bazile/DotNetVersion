@@ -1,50 +1,63 @@
 ﻿#include "stdafx.h"
 #include "messages.h"
+#include "ConsoleCodePage.h"
 
+TCHAR* VAL_VERSION = TEXT("Version");
+TCHAR* VAL_INSTALL = TEXT("Install");
+TCHAR* VAL_SP      = TEXT("SP");
 
-template<typename Key, typename Type>
-Type getValueOrDefault(const std::map<Key, Type>& map, const Key& keyToFind, Type defaultValue)
+// How to determine which versions and service pack levels of the Microsoft .NET Framework are installed
+// http://support.microsoft.com/kb/318785
+
+//class LocalMachineRegistryKey
+//{
+//private:
+//	HKEY hkey_;
+//
+//public:
+//	LocalMachineRegistryKey(LPCWSTR lpSubKey)
+//	{
+//		if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_LOCAL_MACHINE, lpSubKey, 0, KEY_READ, &hkey_))
+//
+//	}
+//};
+
+DWORD releaseToMessageId(int release)
 {
-	auto pair = map.find(keyToFind);
-	return pair != map.end() ? (*pair).second : defaultValue;
-}
-
-void printToConsoleById(DWORD messageId);
-void printToConsole(wchar_t* message);
-
-int _tmain(int argc, _TCHAR* argv[])
-{
-	UINT oldConsoleCP = SetConsoleOutputCP(CP_UTF8);
-
-	HKEY hkey;
-	if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_LOCAL_MACHINE, TEXT("SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v4\\Full\\"), 0, KEY_READ, &hkey))
+	switch (release)
 	{
-		DWORD release, size = sizeof(release);
-		if (ERROR_SUCCESS == RegQueryValueEx(hkey, TEXT("Release"), NULL, NULL, (LPBYTE) &release, &size))
-		{
-			std::map<int, DWORD> releaseToMessage;
-			releaseToMessage[378389] = MSG_NET45_INSTALLED;
-			releaseToMessage[378675] = MSG_NET451_INSTALLED; // .NET 4.5.1 with Windows 8.1
-			releaseToMessage[378758] = MSG_NET451_INSTALLED;
-			releaseToMessage[379893] = MSG_NET452_INSTALLED;
-
-			DWORD messageId = getValueOrDefault<int, DWORD>(releaseToMessage, release, MSG_NET_UNKNOWN_RELEASE);
-			printToConsoleById(messageId);
-		}
-		RegCloseKey(hkey);
+	// .NET 4.5
+	case 378389: return MSG_NET45_INSTALLED;
+	case 378675: return MSG_NET451_INSTALLED; // .NET 4.5.1 with Windows 8.1
+	case 378758: return MSG_NET451_INSTALLED;
+	case 379893: return MSG_NET452_INSTALLED;
+	// .NET 4.6
+	case 393295: return MSG_NET46_INSTALLED; // .NET 4.6 with Windows 10
+	case 393297: return MSG_NET46_INSTALLED;
+	case 394254: return MSG_NET461_INSTALLED; // .NET 4.6.1 on Windows 10
+	case 394271: return MSG_NET461_INSTALLED;
+	case 394747: return MSG_NET462_PREVIEW_INSTALLED; // .NET 4.6.2 on Windows 10 RS1 Preview
+	case 394748: return MSG_NET462_PREVIEW_INSTALLED;
 	}
 
-	SetConsoleOutputCP(oldConsoleCP);
-	return 0;
+	return MSG_NET_UNKNOWN_RELEASE;
 }
 
 void printToConsole(wchar_t* message)
 {
-	int bufferSize = WideCharToMultiByte(CP_UTF8, 0, message, -1, NULL, 0, NULL, NULL);
+	int bufferSize = WideCharToMultiByte(CP_UTF8, 0, message, -1, nullptr, 0, nullptr, nullptr);
 	char* m = new char[bufferSize];
-	WideCharToMultiByte(CP_UTF8, 0, message, -1, m, bufferSize, NULL, NULL);
-	wprintf(L"%S", m);
+	WideCharToMultiByte(CP_UTF8, 0, message, -1, m, bufferSize, nullptr, nullptr);
+	wprintf(L"%S", m); // C runtime version
 	delete[] m;
+
+	//DWORD len = lstrlen(message), written = 0;
+	//WriteConsoleInput(
+	//	GetStdHandle(STD_OUTPUT_HANDLE),
+	//	message,
+	//	lstrlen(message),
+	//	&written
+	//	);
 }
 
 void printToConsoleById(DWORD dwMessageId)
@@ -55,15 +68,15 @@ void printToConsoleById(DWORD dwMessageId)
 	LPTSTR buf;
 	DWORD dwChars = FormatMessage(
 		FORMAT_MESSAGE_FROM_HMODULE | FORMAT_MESSAGE_ALLOCATE_BUFFER,
-		NULL,
+		nullptr,
 		dwMessageId,
 		LANG_NEUTRAL, // Language: LANG_NEUTRAL = current thread's language
-		//MAKELANGID(LANG_RUSSIAN, SUBLANG_RUSSIAN_RUSSIA), 
-		(LPTSTR) &buf,    // Destination buffer
+		//MAKELANGID(LANG_RUSSIAN, SUBLANG_RUSSIAN_RUSSIA),
+		(LPTSTR)&buf,    // Destination buffer
 		0,
-		NULL //&args         // Insertion parameters
+		nullptr //&args         // Insertion parameters
 		);
-	
+
 	//TODO: Check if we need to manually fallback to english?
 	/*if (dwChars == 0)
 	{
@@ -75,4 +88,126 @@ void printToConsoleById(DWORD dwMessageId)
 		printToConsole(buf);
 		LocalFree(buf);
 	}
+}
+
+TCHAR* regQueryStringValue(LPCWSTR lpSubKey, LPCWSTR lpValueName)
+{
+	TCHAR* pValue = nullptr;
+
+	HKEY hkey;
+	if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_LOCAL_MACHINE, lpSubKey, 0, KEY_READ, &hkey))
+	{
+		DWORD valueSize = 0;
+		if (ERROR_SUCCESS == RegQueryValueEx(hkey, lpValueName, nullptr, nullptr, nullptr, &valueSize))
+		{
+			pValue = new TCHAR[valueSize];
+			if (ERROR_SUCCESS != RegQueryValueEx(hkey, VAL_VERSION, nullptr, nullptr, (LPBYTE)pValue, &valueSize))
+			{
+				delete[] pValue;
+				pValue = nullptr;
+			}
+		}
+		RegCloseKey(hkey);
+	}
+
+	return pValue;
+}
+
+void regQueryInstallAndSP(LPCWSTR lpSubKey, LPDWORD lpInstall, LPDWORD lpSP)
+{
+	*lpInstall = -1;
+	*lpSP = -1;
+
+	HKEY hkey;
+	if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_LOCAL_MACHINE, lpSubKey, 0, KEY_READ, &hkey))
+	{
+		DWORD valueSize = sizeof(DWORD);
+		if (ERROR_SUCCESS != RegQueryValueEx(hkey, VAL_INSTALL, nullptr, nullptr, (LPBYTE)lpInstall, &valueSize))
+		{
+			*lpInstall = -1;
+		}
+
+		valueSize = sizeof(DWORD);
+		if (ERROR_SUCCESS != RegQueryValueEx(hkey, VAL_SP, nullptr, nullptr, (LPBYTE)lpSP, &valueSize))
+		{
+			*lpSP = -1;
+		}
+
+		RegCloseKey(hkey);
+	}
+}
+
+void checkDotNet10()
+{
+	// 1.0.3705.0 - .NET 1.0
+	// 1.0.3705.1 - .NET 1.0 SP1
+	// 1.0.3705.2 - .NET 1.0 SP2
+	// 1.0.3705.3 - .NET 1.0 SP3
+	TCHAR* pVersion = regQueryStringValue(TEXT("Software\\Microsoft\\Active Setup\\Installed Components\\{78705f0d-e8db-4b2d-8193-982bdda15ecd}"), VAL_VERSION);
+	if (pVersion != nullptr)
+	{
+		delete[] pVersion;
+	}
+
+	pVersion = regQueryStringValue(TEXT("Software\\Microsoft\\Active Setup\\Installed Components\\{FDC11A6F-17D1-48f9-9EA3-9051954BAA24}"), VAL_VERSION);
+	if (pVersion != nullptr)
+	{
+		delete[] pVersion;
+	}
+}
+
+void checkDotNet11()
+{
+	DWORD install, sp;
+
+	regQueryInstallAndSP(TEXT("SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v1.1.4322"), &install, &sp);
+	if (install != 1) return;
+
+	if (sp == 0)
+	{
+		printToConsoleById(MSG_NET11_INSTALLED);
+	}
+	else if (sp == -1 || sp == 1)
+	{
+		printToConsoleById(MSG_NET11SP1_INSTALLED);
+	}
+}
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+	ConsoleCodePage consoleCP(CP_UTF8);
+
+	checkDotNet10();
+
+	//HKEY hkey;
+	//if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_LOCAL_MACHINE, TEXT("SOFTWARE\\Microsoft\\NET Framework Setup\\NDP"), 0, KEY_READ, &hkey))
+	//{
+	//	//RegQueryInfoKey
+	//	TCHAR subkeyName[255 + 1];
+	//	for (DWORD keyIdx = 0; ; ++keyIdx)
+	//	{
+	//		DWORD cName = 255 + 1;
+	//		if (ERROR_SUCCESS != RegEnumKeyEx(hkey, keyIdx, subkeyName, &cName, nullptr, nullptr, nullptr, nullptr)) break;
+
+	//		printToConsole(subkeyName);
+	//		printToConsole(L"\n");
+	//	}
+	//	RegCloseKey(hkey);
+	//}
+
+	HKEY hkey;
+	if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_LOCAL_MACHINE, TEXT("SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v4\\Full\\"), 0, KEY_READ, &hkey))
+	{
+		DWORD release, size = sizeof(release);
+		if (ERROR_SUCCESS == RegQueryValueEx(hkey, TEXT("Release"), nullptr, nullptr, (LPBYTE) &release, &size))
+		{
+
+			DWORD messageId = releaseToMessageId(release);
+			//wprintf(TEXT("%d\n"), release);
+			printToConsoleById(messageId);
+		}
+		RegCloseKey(hkey);
+	}
+
+	return 0;
 }
