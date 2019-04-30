@@ -28,8 +28,8 @@ DWORD releaseToMessageId(int release)
 	{
 	// .NET 4.5
 	case 378389: return MSG_NET45_INSTALLED;
-	case 378675: return MSG_NET451_INSTALLED; // .NET 4.5.1 with Windows 8.1
-	case 378758: return MSG_NET451_INSTALLED;
+	case 378675: return MSG_NET451_INSTALLED; // On Windows 8.1 and Windows Server 2012 R2
+	case 378758: return MSG_NET451_INSTALLED; // On all other Windows operating systems
 	case 379893: return MSG_NET452_INSTALLED;
 	// .NET 4.6
 	case 393295: return MSG_NET46_INSTALLED; // .NET 4.6 with Windows 10
@@ -211,11 +211,11 @@ int _tmain(int argc, _TCHAR* argv[])
 		DWORD release, size = sizeof(release);
 		if (ERROR_SUCCESS == RegQueryValueEx(hkey, TEXT("Release"), nullptr, nullptr, (LPBYTE) &release, &size))
 		{
+			printf("Release=%d\n", release);
 
 			DWORD messageId = releaseToMessageId(release);
 			//wprintf(TEXT("%d\n"), release);
 			printToConsoleById(messageId);
-			printf("%d", release);
 		}
 		RegCloseKey(hkey);
 	}
