@@ -28,17 +28,17 @@
 // Define the facility codes
 //
 #define FACILITY_SYSTEM                  0x0
-#define FACILITY_STUBS                   0x3
 #define FACILITY_RUNTIME                 0x2
+#define FACILITY_STUBS                   0x3
 #define FACILITY_IO_ERROR_CODE           0x4
 
 
 //
 // Define the severity codes
 //
-#define STATUS_SEVERITY_WARNING          0x2
 #define STATUS_SEVERITY_SUCCESS          0x0
 #define STATUS_SEVERITY_INFORMATIONAL    0x1
+#define STATUS_SEVERITY_WARNING          0x2
 #define STATUS_SEVERITY_ERROR            0x3
 
 
@@ -113,6 +113,42 @@
 // .NET v4.6.2 Preview is installed
 //
 #define MSG_NET462_PREVIEW_INSTALLED     ((DWORD)0x40024621L)
+
+//
+// MessageId: MSG_NET47_INSTALLED
+//
+// MessageText:
+//
+// .NET v4.7 is installed
+//
+#define MSG_NET47_INSTALLED              ((DWORD)0x40024700L)
+
+//
+// MessageId: MSG_NET471_INSTALLED
+//
+// MessageText:
+//
+// .NET v4.7.1 is installed
+//
+#define MSG_NET471_INSTALLED             ((DWORD)0x40024710L)
+
+//
+// MessageId: MSG_NET472_INSTALLED
+//
+// MessageText:
+//
+// .NET v4.7.2 is installed
+//
+#define MSG_NET472_INSTALLED             ((DWORD)0x40024720L)
+
+//
+// MessageId: MSG_NET48_INSTALLED
+//
+// MessageText:
+//
+// .NET v4.8 is installed
+//
+#define MSG_NET48_INSTALLED              ((DWORD)0x40024800L)
 
 //
 // MessageId: MSG_NET_UNKNOWN_RELEASE

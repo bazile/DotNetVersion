@@ -38,6 +38,16 @@ DWORD releaseToMessageId(int release)
 	case 394271: return MSG_NET461_INSTALLED;
 	case 394747: return MSG_NET462_PREVIEW_INSTALLED; // .NET 4.6.2 on Windows 10 RS1 Preview
 	case 394748: return MSG_NET462_PREVIEW_INSTALLED;
+	// .NET 4.7
+	case 460798: return MSG_NET47_INSTALLED; // On Windows 10 Creators Update
+	case 460805: return MSG_NET47_INSTALLED; // On all other Windows operating systems (including other Windows 10 operating systems)
+	case 461308: return MSG_NET471_INSTALLED; // On Windows 10 Fall Creators Update and Windows Server, version 1709
+	case 461310: return MSG_NET471_INSTALLED; // On all other Windows operating systems (including other Windows 10 operating systems)
+	case 461808: return MSG_NET472_INSTALLED; // On Windows 10 April 2018 Update and Windows Server, version 1803
+	case 461814: return MSG_NET472_INSTALLED; // On all Windows operating systems other than Windows 10 April 2018 Update and Windows Server, version 1803
+	// .NET 4.8
+	case 528040: return MSG_NET48_INSTALLED; // On Windows 10 May 2019 Update
+	case 528049: return MSG_NET48_INSTALLED; // On all others Windows operating systems(including other Windows 10 operating systems)
 	}
 
 	return MSG_NET_UNKNOWN_RELEASE;
@@ -205,6 +215,7 @@ int _tmain(int argc, _TCHAR* argv[])
 			DWORD messageId = releaseToMessageId(release);
 			//wprintf(TEXT("%d\n"), release);
 			printToConsoleById(messageId);
+			printf("%d", release);
 		}
 		RegCloseKey(hkey);
 	}
