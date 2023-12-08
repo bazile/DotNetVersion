@@ -47,7 +47,7 @@
 //
 // MessageText:
 //
-// .NET v1.1 is installed
+// .NET Framework v1.1 is installed
 //
 #define MSG_NET11_INSTALLED              ((DWORD)0x40021100L)
 
@@ -56,7 +56,7 @@
 //
 // MessageText:
 //
-// .NET v1.1 SP1 is installed
+// .NET Framework v1.1 SP1 is installed
 //
 #define MSG_NET11SP1_INSTALLED           ((DWORD)0x40021110L)
 
@@ -65,7 +65,7 @@
 //
 // MessageText:
 //
-// .NET v4.5 is installed
+// .NET Framework v4.5 is installed
 //
 #define MSG_NET45_INSTALLED              ((DWORD)0x40024500L)
 
@@ -74,7 +74,7 @@
 //
 // MessageText:
 //
-// .NET v4.5.1 is installed
+// .NET Framework v4.5.1 is installed
 //
 #define MSG_NET451_INSTALLED             ((DWORD)0x40024510L)
 
@@ -83,7 +83,7 @@
 //
 // MessageText:
 //
-// .NET v4.5.2 is installed
+// .NET Framework v4.5.2 is installed
 //
 #define MSG_NET452_INSTALLED             ((DWORD)0x40024520L)
 
@@ -92,7 +92,7 @@
 //
 // MessageText:
 //
-// .NET v4.6 is installed
+// .NET Framework v4.6 is installed
 //
 #define MSG_NET46_INSTALLED              ((DWORD)0x40024600L)
 
@@ -101,7 +101,7 @@
 //
 // MessageText:
 //
-// .NET v4.6.1 is installed
+// .NET Framework v4.6.1 is installed
 //
 #define MSG_NET461_INSTALLED             ((DWORD)0x40024610L)
 
@@ -110,7 +110,7 @@
 //
 // MessageText:
 //
-// .NET v4.6.2 Preview is installed
+// .NET Framework v4.6.2 Preview is installed
 //
 #define MSG_NET462_PREVIEW_INSTALLED     ((DWORD)0x40024621L)
 
@@ -119,7 +119,7 @@
 //
 // MessageText:
 //
-// .NET v4.7 is installed
+// .NET Framework v4.7 is installed
 //
 #define MSG_NET47_INSTALLED              ((DWORD)0x40024700L)
 
@@ -128,7 +128,7 @@
 //
 // MessageText:
 //
-// .NET v4.7.1 is installed
+// .NET Framework v4.7.1 is installed
 //
 #define MSG_NET471_INSTALLED             ((DWORD)0x40024710L)
 
@@ -137,7 +137,7 @@
 //
 // MessageText:
 //
-// .NET v4.7.2 is installed
+// .NET Framework v4.7.2 is installed
 //
 #define MSG_NET472_INSTALLED             ((DWORD)0x40024720L)
 
@@ -146,7 +146,7 @@
 //
 // MessageText:
 //
-// .NET v4.8 is installed
+// .NET Framework v4.8 is installed
 //
 #define MSG_NET48_INSTALLED              ((DWORD)0x40024800L)
 
@@ -155,7 +155,7 @@
 //
 // MessageText:
 //
-// .NET v4.8.1 is installed
+// .NET Framework v4.8.1 is installed
 //
 #define MSG_NET481_INSTALLED             ((DWORD)0x40024810L)
 
