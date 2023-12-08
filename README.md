@@ -1,6 +1,6 @@
 DotNetVersion
 =============
 
-Detect installed .NET versions
+Detect installed .NET Framework versions
 
 Distributed under MIT license
