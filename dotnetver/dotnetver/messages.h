@@ -151,6 +151,15 @@
 #define MSG_NET48_INSTALLED              ((DWORD)0x40024800L)
 
 //
+// MessageId: MSG_NET481_INSTALLED
+//
+// MessageText:
+//
+// .NET v4.8.1 is installed
+//
+#define MSG_NET481_INSTALLED             ((DWORD)0x40024810L)
+
+//
 // MessageId: MSG_NET_UNKNOWN_RELEASE
 //
 // MessageText:

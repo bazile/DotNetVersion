@@ -46,8 +46,13 @@ DWORD releaseToMessageId(int release)
 	case 461808: return MSG_NET472_INSTALLED; // On Windows 10 April 2018 Update and Windows Server, version 1803
 	case 461814: return MSG_NET472_INSTALLED; // On all Windows operating systems other than Windows 10 April 2018 Update and Windows Server, version 1803
 	// .NET 4.8
-	case 528040: return MSG_NET48_INSTALLED; // On Windows 10 May 2019 Update
-	case 528049: return MSG_NET48_INSTALLED; // On all others Windows operating systems(including other Windows 10 operating systems)
+	case 528040: return MSG_NET48_INSTALLED; // On Windows 10 May 2019 Update and Windows 10 November 2019 Update: 
+	case 528049: return MSG_NET48_INSTALLED; // On all other Windows operating systems (including other Windows 10 operating systems)
+	case 528372: return MSG_NET48_INSTALLED; // On Windows 10 May 2020 Update, October 2020 Update, May 2021 Update, November 2021 Update, and 2022 Update
+	case 528449: return MSG_NET48_INSTALLED; // On Windows 11 and Windows Server 2022
+	// .NET 4.8.1
+	case 533320: return MSG_NET481_INSTALLED; // On Windows 11 2022 Update and Windows 11 2023 Update
+	case 533325: return MSG_NET481_INSTALLED; // All other Windows operating systems
 	}
 
 	return MSG_NET_UNKNOWN_RELEASE;
