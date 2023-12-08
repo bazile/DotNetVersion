@@ -26,33 +26,32 @@ DWORD releaseToMessageId(int release)
 {
 	switch (release)
 	{
-	// .NET 4.5
-	case 378389: return MSG_NET45_INSTALLED;
-	case 378675: return MSG_NET451_INSTALLED; // On Windows 8.1 and Windows Server 2012 R2
-	case 378758: return MSG_NET451_INSTALLED; // On all other Windows operating systems
-	case 379893: return MSG_NET452_INSTALLED;
-	// .NET 4.6
-	case 393295: return MSG_NET46_INSTALLED; // .NET 4.6 with Windows 10
-	case 393297: return MSG_NET46_INSTALLED;
-	case 394254: return MSG_NET461_INSTALLED; // .NET 4.6.1 on Windows 10
-	case 394271: return MSG_NET461_INSTALLED;
-	case 394747: return MSG_NET462_PREVIEW_INSTALLED; // .NET 4.6.2 on Windows 10 RS1 Preview
-	case 394748: return MSG_NET462_PREVIEW_INSTALLED;
-	// .NET 4.7
-	case 460798: return MSG_NET47_INSTALLED; // On Windows 10 Creators Update
-	case 460805: return MSG_NET47_INSTALLED; // On all other Windows operating systems (including other Windows 10 operating systems)
-	case 461308: return MSG_NET471_INSTALLED; // On Windows 10 Fall Creators Update and Windows Server, version 1709
-	case 461310: return MSG_NET471_INSTALLED; // On all other Windows operating systems (including other Windows 10 operating systems)
-	case 461808: return MSG_NET472_INSTALLED; // On Windows 10 April 2018 Update and Windows Server, version 1803
-	case 461814: return MSG_NET472_INSTALLED; // On all Windows operating systems other than Windows 10 April 2018 Update and Windows Server, version 1803
-	// .NET 4.8
-	case 528040: return MSG_NET48_INSTALLED; // On Windows 10 May 2019 Update and Windows 10 November 2019 Update: 
-	case 528049: return MSG_NET48_INSTALLED; // On all other Windows operating systems (including other Windows 10 operating systems)
-	case 528372: return MSG_NET48_INSTALLED; // On Windows 10 May 2020 Update, October 2020 Update, May 2021 Update, November 2021 Update, and 2022 Update
-	case 528449: return MSG_NET48_INSTALLED; // On Windows 11 and Windows Server 2022
-	// .NET 4.8.1
-	case 533320: return MSG_NET481_INSTALLED; // On Windows 11 2022 Update and Windows 11 2023 Update
-	case 533325: return MSG_NET481_INSTALLED; // All other Windows operating systems
+	// .NET 4.5.x
+	case 378'389: return MSG_NET45_INSTALLED;
+	case 378'675: return MSG_NET451_INSTALLED; // On Windows 8.1 and Windows Server 2012 R2
+	case 378'758: return MSG_NET451_INSTALLED; // On all other Windows operating systems
+	case 379'893: return MSG_NET452_INSTALLED;
+	// .NET 4.6.x
+	case 393'295: return MSG_NET46_INSTALLED; // .NET 4.6 with Windows 10
+	case 393'297: return MSG_NET46_INSTALLED;
+	case 394'254: return MSG_NET461_INSTALLED; // .NET 4.6.1 on Windows 10
+	case 394'271: return MSG_NET461_INSTALLED;
+	case 394'747: return MSG_NET462_PREVIEW_INSTALLED; // .NET 4.6.2 on Windows 10 RS1 Preview
+	case 394'748: return MSG_NET462_PREVIEW_INSTALLED;
+	// .NET 4.7.x
+	case 460'798: return MSG_NET47_INSTALLED; // On Windows 10 Creators Update
+	case 460'805: return MSG_NET47_INSTALLED; // On all other Windows operating systems (including other Windows 10 operating systems)
+	case 461'308: return MSG_NET471_INSTALLED; // On Windows 10 Fall Creators Update and Windows Server, version 1709
+	case 461'310: return MSG_NET471_INSTALLED; // On all other Windows operating systems (including other Windows 10 operating systems)
+	case 461'808: return MSG_NET472_INSTALLED; // On Windows 10 April 2018 Update and Windows Server, version 1803
+	case 461'814: return MSG_NET472_INSTALLED; // On all Windows operating systems other than Windows 10 April 2018 Update and Windows Server, version 1803
+	// .NET 4.8.x
+	case 528'040: return MSG_NET48_INSTALLED; // On Windows 10 May 2019 Update and Windows 10 November 2019 Update: 
+	case 528'049: return MSG_NET48_INSTALLED; // On all other Windows operating systems (including other Windows 10 operating systems)
+	case 528'372: return MSG_NET48_INSTALLED; // On Windows 10 May 2020 Update, October 2020 Update, May 2021 Update, November 2021 Update, and 2022 Update
+	case 528'449: return MSG_NET48_INSTALLED; // On Windows 11 and Windows Server 2022
+	case 533'320: return MSG_NET481_INSTALLED; // On Windows 11 2022 Update and Windows 11 2023 Update
+	case 533'325: return MSG_NET481_INSTALLED; // All other Windows operating systems
 	}
 
 	return MSG_NET_UNKNOWN_RELEASE;
